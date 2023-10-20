@@ -5,16 +5,29 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Slider))]
 public class HealthBar : MonoBehaviour
 {
+    [SerializeField] private Player _player;
     [SerializeField] private Gradient _gradient;
     [SerializeField] private Image _fill;
     [SerializeField] private float _delay;
-    [SerializeField] private float _interpolationValue;
+    [SerializeField] private float _interpolationValue;    
 
     private Slider _slider;
     private Coroutine _coroutine;
 
     private void Awake() =>
         _slider = GetComponent<Slider>();
+
+    private void OnEnable()
+    {
+        _player.MaxHealthEstablished += SetMaxHealth;
+        _player.HealthChanged += SetHealth;
+    }
+
+    private void OnDisable()
+    {
+        _player.MaxHealthEstablished -= SetMaxHealth;
+        _player.HealthChanged -= SetHealth;
+    }
 
     public void SetMaxHealth(int health)
     {
