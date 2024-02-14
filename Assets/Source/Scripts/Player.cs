@@ -2,13 +2,12 @@ using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
-{
-    [SerializeField] private HealthBar _healthBar;
-    [SerializeField] private int _currentHealth;
+{    
     [SerializeField] private int _damage;
     [SerializeField] private int _healing;
 
-    private int _maxHealth = 100;
+    [SerializeField]private int _maxHealth = 100;
+    private int _currentHealth;
 
     public event Action<int> MaxHealthEstablished;
     public event Action<int> HealthChanged;
