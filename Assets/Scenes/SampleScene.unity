@@ -228,7 +228,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f9e592697278345828101ababbdb29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1534938182}
+  _health: {fileID: 1534938182}
+  _healthChanger: {fileID: 1534938183}
   _gradient:
     serializedVersion: 2
     key0: {r: 0.8078432, g: 0, b: 0, a: 1}
@@ -259,8 +260,8 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   _fill: {fileID: 473432434}
-  _delay: 0.05
-  _interpolationValue: 1.5
+  _delay: 0.01
+  _interpolationValue: 1
 --- !u!1 &246314816
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,7 +836,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f22110740c35dd345909d89acf8f6f15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1534938182}
+  _health: {fileID: 1534938182}
+  _healthChanger: {fileID: 1534938183}
   _healthBar: {fileID: 526172155}
 --- !u!1 &526172153
 GameObject:
@@ -1124,9 +1126,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1534938182}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: TakeHealing
+      - m_Target: {fileID: 1534938183}
+        m_TargetAssemblyTypeName: HealthChanger, Assembly-CSharp
+        m_MethodName: PressHealingButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1384,8 +1386,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041D\u0430\u043D\u0435\u0441\u0442\u0438\n\u0443\u0440\u043E\u043D\n\n(-10
-    HP)"
+  m_text: "\u0420\u0430\u043D\u0438\u0442\u044C\n\n(-10 HP)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ba5b7bbbab1a3fa439951ea044a8ef88, type: 2}
   m_sharedMaterial: {fileID: -4255009269383138587, guid: ba5b7bbbab1a3fa439951ea044a8ef88, type: 2}
@@ -1699,7 +1700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
+  m_ScaleFactor: 1.52
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
@@ -1764,6 +1765,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1534938181}
   - component: {fileID: 1534938182}
+  - component: {fileID: 1534938183}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1798,9 +1800,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc1dff57ccfaf4d4d83b93ab77543988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <MaxHealth>k__BackingField: 100
+--- !u!114 &1534938183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534938180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd4fa02ec74a76c4e9803753a530d92a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _damage: 10
   _healing: 10
-  _maxHealth: 100
 --- !u!1 &1561598896
 GameObject:
   m_ObjectHideFlags: 0
@@ -1982,7 +1996,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac6c21070596864997b87449c7fbc6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1534938182}
+  _health: {fileID: 1534938182}
+  _healthChanger: {fileID: 1534938183}
   _gradient:
     serializedVersion: 2
     key0: {r: 0.8078432, g: 0, b: 0, a: 1}
@@ -2210,9 +2225,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1534938182}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: TakeDamage
+      - m_Target: {fileID: 1534938183}
+        m_TargetAssemblyTypeName: HealthChanger, Assembly-CSharp
+        m_MethodName: PressDamageButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

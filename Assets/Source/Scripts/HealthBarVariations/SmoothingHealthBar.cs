@@ -3,42 +3,42 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Slider))]
-public class FancyHealthBar : HealthBar
+public class SmoothingHealthBar : HealthVisualizer
 {    
     [SerializeField] private Gradient _gradient;
     [SerializeField] private Image _fill;
     [SerializeField] private float _delay;
-    [SerializeField] private float _interpolationValue;    
+    [SerializeField] private float _interpolationValue = 1;    
 
     private Slider _slider;
     private Coroutine _coroutine;
 
-    private void Awake() =>
-        _slider = GetComponent<Slider>();
+    private void Awake() =>  _slider = GetComponent<Slider>();
 
-    protected override void OnMaxHealthEstablished(int health)
+    private void Start()
     {
-        _slider.maxValue = health;
-        _slider.value = health;
+        UpdateSliderValues(_slider);
 
         _fill.color = _gradient.Evaluate(1f);
     }
 
-    protected override void OnHealthChanged(int health)
+    protected override void OnHealthChanged()
     {
+        _slider.maxValue = MaxHealth;
+
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
-        _coroutine = StartCoroutine(ChangeHealth(health));
+        _coroutine = StartCoroutine(ChangeHealthSlider());
     }
 
-    private IEnumerator ChangeHealth(int health)
+    private IEnumerator ChangeHealthSlider()
     {
         WaitForSeconds delay = new WaitForSeconds(_delay);
 
-        while (_slider.value != health)
+        while (_slider.value != CurrentHealth)
         {
-            _slider.value = Mathf.MoveTowards(_slider.value, health, _interpolationValue);
+            _slider.value = Mathf.MoveTowards(_slider.value, CurrentHealth, _interpolationValue);
 
             _fill.color = _gradient.Evaluate(_slider.normalizedValue);
 
