@@ -3,9 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Slider))]
-public class FancyHealthBar : MonoBehaviour
-{
-    [SerializeField] private Player _player;
+public class FancyHealthBar : HealthBar
+{    
     [SerializeField] private Gradient _gradient;
     [SerializeField] private Image _fill;
     [SerializeField] private float _delay;
@@ -17,19 +16,7 @@ public class FancyHealthBar : MonoBehaviour
     private void Awake() =>
         _slider = GetComponent<Slider>();
 
-    private void OnEnable()
-    {
-        _player.MaxHealthEstablished += OnMaxHealthEstablished;
-        _player.HealthChanged += OnHealthChanged;
-    }
-
-    private void OnDisable()
-    {
-        _player.MaxHealthEstablished -= OnMaxHealthEstablished;
-        _player.HealthChanged -= OnHealthChanged;
-    }
-
-    public void OnMaxHealthEstablished(int health)
+    protected override void OnMaxHealthEstablished(int health)
     {
         _slider.maxValue = health;
         _slider.value = health;
@@ -37,7 +24,7 @@ public class FancyHealthBar : MonoBehaviour
         _fill.color = _gradient.Evaluate(1f);
     }
 
-    public void OnHealthChanged(int health)
+    protected override void OnHealthChanged(int health)
     {
         if (_coroutine != null)
             StopCoroutine(_coroutine);

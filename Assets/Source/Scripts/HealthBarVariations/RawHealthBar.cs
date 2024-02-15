@@ -2,9 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RawHealthBar : MonoBehaviour
-{
-    [SerializeField] private Player _player;
+[RequireComponent(typeof(Slider))]
+public class RawHealthBar : HealthBar
+{    
     [SerializeField] private Gradient _gradient;
     [SerializeField] private Image _fill;
 
@@ -12,21 +12,9 @@ public class RawHealthBar : MonoBehaviour
     private Coroutine _coroutine;
 
     private void Awake() =>
-        _slider = GetComponent<Slider>();
+        _slider = GetComponent<Slider>();    
 
-    private void OnEnable()
-    {
-        _player.MaxHealthEstablished += OnMaxHealthEstablished;
-        _player.HealthChanged += OnHealthChanged;
-    }
-
-    private void OnDisable()
-    {
-        _player.MaxHealthEstablished -= OnMaxHealthEstablished;
-        _player.HealthChanged -= OnHealthChanged;
-    }
-
-    public void OnMaxHealthEstablished(int health)
+    protected override void OnMaxHealthEstablished(int health)
     {
         _slider.maxValue = health;
         _slider.value = health;
@@ -34,7 +22,7 @@ public class RawHealthBar : MonoBehaviour
         _fill.color = _gradient.Evaluate(1f);
     }
 
-    public void OnHealthChanged(int health)
+    protected override void OnHealthChanged(int health)
     {
         if (_coroutine != null)
             StopCoroutine(_coroutine);
